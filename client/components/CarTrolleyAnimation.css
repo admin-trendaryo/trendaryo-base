@@ -1,0 +1,55 @@
+/* Car Trolley Animation */
+@keyframes carTrolleyJourney {
+  0% {
+    left: -64px;
+  }
+  
+  40% {
+    left: calc(50% - 32px);
+  }
+  
+  50% {
+    left: calc(50% - 32px);
+    transform: translateY(-50%) scale(1);
+  }
+  
+  60% {
+    left: calc(50% - 32px);
+    transform: translateY(-50%) scale(1.1);
+  }
+  
+  70% {
+    left: calc(50% - 32px);
+    transform: translateY(-50%) scale(1);
+  }
+  
+  100% {
+    left: calc(100% + 64px);
+  }
+}
+
+.car-trolley-animate {
+  animation: carTrolleyJourney 6s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+/* Trolley emptying effect */
+@keyframes trolleyEmpty {
+  0%, 40%, 70%, 100% {
+    opacity: 0;
+  }
+  
+  50%, 60% {
+    opacity: 1;
+    transform: translateY(-10px);
+  }
+}
+
+.trolley-items {
+  position: absolute;
+  top: -5px;
+  right: 0;
+  font-size: 8px;
+  animation: trolleyEmpty 6s ease-in-out infinite;
+  animation-delay: 2s;
+}
