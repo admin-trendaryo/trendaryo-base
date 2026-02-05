@@ -3,13 +3,17 @@ import { useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import MagneticButton from "@/components/MagneticButton";
-import { Lock, ArrowRight, CreditCard, Smartphone, Bitcoin, User, UserCheck, Zap } from "lucide-react";
+import { paymentService, PAYMENT_GATEWAYS } from "@/services/PaymentService";
+import { Lock, ArrowRight, CreditCard, Smartphone, Bitcoin, User, UserCheck, Zap, Globe, Building } from "lucide-react";
 
 export default function Checkout() {
   const navigate = useNavigate();
   const [step, setStep] = useState<"login" | "shipping" | "payment" | "review">("login");
   const [checkoutType, setCheckoutType] = useState<"guest" | "user" | "oneclick">("guest");
-  const [paymentMethod, setPaymentMethod] = useState<"card" | "paypal" | "applepay" | "crypto">("card");
+  const [paymentMethod, setPaymentMethod] = useState<"card" | "paypal" | "applepay" | "crypto" | "bank" | "mobile">("card");
+  const [selectedGateway, setSelectedGateway] = useState('stripe');
+  const [afghanBanks, setAfghanBanks] = useState([]);
+  const [mobileProviders, setMobileProviders] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [savedAddresses, setSavedAddresses] = useState<any[]>([]);
   const [processing, setProcessing] = useState(false);
@@ -43,7 +47,31 @@ export default function Checkout() {
         setCheckoutType('user');
       }
     }
+    
+    // Load Afghan payment options
+    loadPaymentOptions();
   }, []);
+
+  const loadPaymentOptions = async () => {
+    try {
+      const [banksRes, mobileRes] = await Promise.all([
+        fetch('/api/payments/afghan-banks'),
+        fetch('/api/payments/mobile-money')
+      ]);
+      
+      if (banksRes.ok) {
+        const banksData = await banksRes.json();
+        setAfghanBanks(banksData.banks || []);
+      }
+      
+      if (mobileRes.ok) {
+        const mobileData = await mobileRes.json();
+        setMobileProviders(mobileData.providers || []);
+      }
+    } catch (error) {
+      console.error('Failed to load payment options:', error);
+    }
+  };
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -83,16 +111,44 @@ export default function Checkout() {
     e.preventDefault();
     setProcessing(true);
     
-    // Simulate payment processing
-    setTimeout(() => {
-      navigate("/order-confirmation");
-    }, 2000);
+    try {
+      paymentService.setGateway(selectedGateway);
+      
+      const paymentData = {
+        amount: total,
+        currency: 'USD',
+        customerInfo: {
+          email: formData.email,
+          name: `${formData.firstName} ${formData.lastName}`,
+          address: {
+            line1: formData.address,
+            city: formData.city,
+            state: formData.state,
+            postal_code: formData.zip,
+            country: formData.country
+          }
+        },
+        paymentMethod: paymentMethod
+      };
+      
+      const result = await paymentService.processPayment(paymentData);
+      
+      if (result.success) {
+        navigate("/order-confirmation");
+      } else {
+        throw new Error(result.error || 'Payment failed');
+      }
+    } catch (error) {
+      console.error('Payment error:', error);
+      alert('Payment failed. Please try again.');
+    } finally {
+      setProcessing(false);
+    }
   };
 
   const handlePaymentMethodSelect = (method: typeof paymentMethod) => {
     setPaymentMethod(method);
-    if (method === 'paypal' || method === 'applepay' || method === 'crypto') {
-      // Skip to review for external payment methods
+    if (method === 'paypal' || method === 'applepay' || method === 'crypto' || method === 'bank' || method === 'mobile') {
       setStep('review');
     }
   };

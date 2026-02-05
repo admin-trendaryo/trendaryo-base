@@ -2,29 +2,58 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Trendaryo - Where cutting-edge technology meets holistic wellness. Discover products that enhance your digital life and nurture your well-being." />
-    <meta name="keywords" content="technology, wellness, smartphones, fitness, health, gadgets" />
-    <meta name="theme-color" content="#3b82f6" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     
-    <!-- Security Headers -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:;" />
-    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
-    <meta http-equiv="X-Frame-Options" content="DENY" />
-    <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
-    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
+    <!-- SEO Meta Tags -->
+    <title>Trendaryo - Premium Tech & Wellness Products | Effortless Excellence</title>
+    <meta name="description" content="Discover cutting-edge technology and holistic wellness products at Trendaryo. Premium smartphones, fitness trackers, organic supplements & more. Free shipping worldwide." />
+    <meta name="keywords" content="technology, wellness, smartphones, fitness trackers, organic supplements, premium gadgets, health products, Afghanistan, global shipping" />
+    <meta name="author" content="Trendaryo" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     
-    <!-- Preconnect to external domains -->
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://trendaryo.com/" />
+    <meta property="og:title" content="Trendaryo - Premium Tech & Wellness Products" />
+    <meta property="og:description" content="Where cutting-edge technology meets holistic wellness. Discover products that enhance your digital life and nurture your well-being." />
+    <meta property="og:image" content="https://trendaryo.com/images/og-image.jpg" />
+    <meta property="og:site_name" content="Trendaryo" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://trendaryo.com/" />
+    <meta property="twitter:title" content="Trendaryo - Premium Tech & Wellness Products" />
+    <meta property="twitter:description" content="Where cutting-edge technology meets holistic wellness. Premium products for modern living." />
+    <meta property="twitter:image" content="https://trendaryo.com/images/twitter-image.jpg" />
+    
+    <meta name="theme-color" content="#F97316" />
+    <link rel="canonical" href="https://trendaryo.com/" />
+    
+    <!-- Performance Optimization -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="//fonts.gstatic.com" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     
-    <!-- Google Fonts with display=swap for performance -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <!-- Critical CSS inline -->
+    <style>
+      body{margin:0;font-family:'Inter',system-ui,sans-serif;line-height:1.6}
+      .loading{display:flex;align-items:center;justify-content:center;height:100vh;font-family:'Inter',sans-serif}
+      h1,h2,h3,h4,h5,h6{font-family:'Playfair Display',serif}
+      .container{max-width:1200px;margin:0 auto;padding:0 1rem}
+      @media(min-width:768px){.container{padding:0 2rem}}
+    </style>
     
     <!-- Preload critical resources -->
     <link rel="preload" href="/client/main.tsx" as="script" crossorigin />
-    <link rel="preload" href="/client/global.css" as="style" />
     <link rel="preload" href="/images/car-trolley.png" as="image" />
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    
+    <!-- Async CSS loading -->
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap"></noscript>
     
     <title>Trendaryo - Effortless Excellence</title>
     

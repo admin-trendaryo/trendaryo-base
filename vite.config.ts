@@ -18,12 +18,21 @@ export default defineConfig(({ mode }) => ({
   build: {
     outDir: "dist/spa",
     minify: 'terser',
+    target: 'es2015',
     rollupOptions: {
       output: {
         manualChunks: {
           vendor: ['react', 'react-dom'],
           router: ['react-router-dom'],
           icons: ['lucide-react'],
+        },
+        assetFileNames: (assetInfo) => {
+          const info = assetInfo.name.split('.');
+          const ext = info[info.length - 1];
+          if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(ext)) {
+            return `images/[name]-[hash][extname]`;
+          }
+          return `assets/[name]-[hash][extname]`;
         },
       },
     },
@@ -33,6 +42,8 @@ export default defineConfig(({ mode }) => ({
         drop_debugger: mode === 'production',
       },
     },
+    cssCodeSplit: true,
+    sourcemap: mode !== 'production',
   },
   plugins: [react(), expressPlugin()],
   resolve: {
@@ -43,6 +54,13 @@ export default defineConfig(({ mode }) => ({
   },
   optimizeDeps: {
     include: ['react', 'react-dom', 'react-router-dom', 'lucide-react'],
+  },
+  // Performance optimizations
+  esbuild: {
+    target: 'es2015',
+    minifyIdentifiers: mode === 'production',
+    minifySyntax: mode === 'production',
+    minifyWhitespace: mode === 'production',
   },
 }));
 
