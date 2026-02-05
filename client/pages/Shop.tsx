@@ -346,7 +346,7 @@ export default function Shop() {
               {/* Load More */}
               {filteredProducts.length >= 8 && (
                 <div className="mt-12 text-center">
-                  <MagneticButton className="px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-purple-700 shadow-lg">
+                  <MagneticButton className="btn-tech">
                     Load More Products
                   </MagneticButton>
                 </div>

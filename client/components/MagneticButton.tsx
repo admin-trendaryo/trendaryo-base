@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, ReactNode } from "react";
+import { Link } from "react-router-dom";
 
 interface MagneticButtonProps {
   children: ReactNode;
@@ -38,7 +39,6 @@ export default function MagneticButton({
       const deltaY = e.clientY - centerY;
       const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
       
-      // Only apply effect within 100px radius for buttons
       if (distance < 100) {
         const strength = Math.max(0, 1 - distance / 100);
         const maxMove = 4;
@@ -55,7 +55,6 @@ export default function MagneticButton({
       setTransform({ x: 0, y: 0 });
     };
 
-    // Only add listeners on non-touch devices
     const isTouchDevice = 'ontouchstart' in window;
     if (!isTouchDevice) {
       document.addEventListener('mousemove', handleMouseMove);
@@ -93,12 +92,10 @@ export default function MagneticButton({
   }
 
   if (as === "Link") {
-    // Dynamic import for Link component
-    const Link = require("react-router-dom").Link;
     return (
       <Link
         ref={buttonRef as any}
-        to={to}
+        to={to || "/"}
         className={combinedClassName}
         style={baseStyle}
         onClick={onClick}

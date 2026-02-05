@@ -1,55 +1,252 @@
-/* Car Trolley Animation */
-@keyframes carTrolleyJourney {
+/* Premium Car Trolley Animation */
+.premium-bar {
+  backdrop-filter: blur(10px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.car-trolley-container {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+  transition: all 0.3s ease;
+}
+
+.car-trolley-container:hover {
+  transform: translateY(-50%) scale(1.1);
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3));
+}
+
+.car-trolley-image {
+  animation: carBounce 2s ease-in-out infinite;
+}
+
+.car-trolley-image img {
+  transition: all 0.3s ease;
+}
+
+.car-trolley-container:hover .car-trolley-image img {
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2)) brightness(1.1);
+}
+
+/* Premium car trolley journey animation */
+@keyframes premiumCarJourney {
   0% {
-    left: -64px;
+    left: -100px;
+    transform: translateY(-50%) rotate(-1deg);
   }
   
-  40% {
-    left: calc(50% - 32px);
+  15% {
+    transform: translateY(-50%) rotate(0deg);
+  }
+  
+  45% {
+    left: calc(50% - 50px);
+    transform: translateY(-50%) rotate(0deg);
   }
   
   50% {
-    left: calc(50% - 32px);
-    transform: translateY(-50%) scale(1);
+    left: calc(50% - 50px);
+    transform: translateY(-55%) rotate(0deg) scale(1.1);
   }
   
-  60% {
-    left: calc(50% - 32px);
-    transform: translateY(-50%) scale(1.1);
+  55% {
+    left: calc(50% - 50px);
+    transform: translateY(-50%) rotate(0deg) scale(1);
   }
   
-  70% {
-    left: calc(50% - 32px);
-    transform: translateY(-50%) scale(1);
+  85% {
+    transform: translateY(-50%) rotate(0deg);
   }
   
   100% {
-    left: calc(100% + 64px);
+    left: calc(100% + 100px);
+    transform: translateY(-50%) rotate(1deg);
   }
 }
 
+/* Performance Optimized Animations */
 .car-trolley-animate {
-  animation: carTrolleyJourney 6s ease-in-out infinite;
-  animation-delay: 2s;
+  animation: premiumCarJourney 10s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation-delay: 1s;
+  will-change: transform;
+  transform: translateZ(0); /* Hardware acceleration */
 }
 
-/* Trolley emptying effect */
-@keyframes trolleyEmpty {
-  0%, 40%, 70%, 100% {
-    opacity: 0;
+.car-trolley-animate.paused {
+  animation-play-state: paused;
+}
+
+/* Optimized wheel animations */
+.wheel {
+  transform-origin: center;
+  animation: wheelSpin 1s linear infinite;
+  will-change: transform;
+}
+
+.trolley-wheel {
+  transform-origin: center;
+  animation: wheelSpin 1.2s linear infinite;
+  will-change: transform;
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .car-trolley-animate,
+  .wheel,
+  .trolley-wheel,
+  .sparkle,
+  .particle {
+    animation: none;
   }
   
-  50%, 60% {
-    opacity: 1;
-    transform: translateY(-10px);
+  .car-trolley-container {
+    transform: translateY(-50%);
   }
 }
 
-.trolley-items {
+.trolley-item {
+  animation: itemBounce 1.5s ease-in-out infinite;
+}
+
+.item-1 { animation-delay: 0s; }
+.item-2 { animation-delay: 0.2s; }
+.item-3 { animation-delay: 0.4s; }
+.item-4 { animation-delay: 0.6s; }
+
+@keyframes itemBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+}
+
+/* Delivery sparkles */
+.sparkles {
   position: absolute;
-  top: -5px;
+  top: -10px;
+  right: -15px;
+  pointer-events: none;
+}
+
+.sparkle {
+  position: absolute;
+  font-size: 12px;
+  animation: sparkleFloat 3s ease-in-out infinite;
+  opacity: 0;
+}
+
+.sparkle-1 {
+  top: 0;
   right: 0;
-  font-size: 8px;
-  animation: trolleyEmpty 6s ease-in-out infinite;
+  animation-delay: 0s;
+}
+
+.sparkle-2 {
+  top: -5px;
+  right: 10px;
+  animation-delay: 1s;
+}
+
+.sparkle-3 {
+  top: 5px;
+  right: 5px;
   animation-delay: 2s;
+}
+
+@keyframes sparkleFloat {
+  0%, 90%, 100% { 
+    opacity: 0;
+    transform: translateY(0) scale(0.5);
+  }
+  
+  10%, 80% { 
+    opacity: 1;
+    transform: translateY(-10px) scale(1);
+  }
+  
+  50% {
+    transform: translateY(-15px) scale(1.2);
+  }
+}
+
+/* Particle effects */
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  animation: particleFloat 4s ease-in-out infinite;
+}
+
+.particle-1 {
+  top: 20%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.particle-2 {
+  top: 60%;
+  left: 30%;
+  animation-delay: 1.5s;
+}
+
+.particle-3 {
+  top: 40%;
+  left: 70%;
+  animation-delay: 3s;
+}
+
+@keyframes particleFloat {
+  0%, 100% {
+    opacity: 0;
+    transform: translateY(0) scale(0.5);
+  }
+  
+  50% {
+    opacity: 1;
+    transform: translateY(-20px) scale(1);
+  }
+}
+
+/* Track glow effect */
+.track-glow {
+  animation: trackPulse 3s ease-in-out infinite;
+}
+
+@keyframes trackPulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+
+/* Progress bar */
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+  animation: progressMove 10s linear infinite;
+  animation-delay: 1s;
+}
+
+@keyframes progressMove {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100vw);
+  }
+}
+
+/* Hover effects */
+.car-trolley-container:hover .sparkle {
+  animation-duration: 1s;
+}
+
+.car-trolley-container:hover .wheel {
+  animation-duration: 0.3s;
+}
+
+.car-trolley-container:hover .trolley-wheel {
+  animation-duration: 0.4s;
 }

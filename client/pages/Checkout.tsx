@@ -147,7 +147,7 @@ export default function Checkout() {
                       <MagneticButton
                         onClick={handleOneClickCheckout}
                         disabled={processing}
-                        className="w-full py-3 bg-orange-500 text-white font-semibold rounded-lg hover:bg-orange-600 disabled:opacity-50"
+                        className="btn-primary w-full disabled:opacity-50"
                       >
                         {processing ? 'Processing...' : 'Complete Order Now - $215.60'}
                       </MagneticButton>

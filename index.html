@@ -7,20 +7,32 @@
     <meta name="keywords" content="technology, wellness, smartphones, fitness, health, gadgets" />
     <meta name="theme-color" content="#3b82f6" />
     
+    <!-- Security Headers -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:;" />
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="X-Frame-Options" content="DENY" />
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
+    
     <!-- Preconnect to external domains -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     
+    <!-- Google Fonts with display=swap for performance -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    
     <!-- Preload critical resources -->
-    <link rel="preload" href="/client/main.tsx" as="script" />
+    <link rel="preload" href="/client/main.tsx" as="script" crossorigin />
     <link rel="preload" href="/client/global.css" as="style" />
+    <link rel="preload" href="/images/car-trolley.png" as="image" />
     
     <title>Trendaryo - Effortless Excellence</title>
     
     <!-- Critical CSS inline for faster rendering -->
     <style>
-      body { margin: 0; font-family: system-ui, -apple-system, sans-serif; }
-      .loading { display: flex; align-items: center; justify-content: center; height: 100vh; }
+      body { margin: 0; font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+      .loading { display: flex; align-items: center; justify-content: center; height: 100vh; font-family: 'Inter', sans-serif; }
+      h1, h2, h3, h4, h5, h6 { font-family: 'Playfair Display', serif; }
     </style>
   </head>
 

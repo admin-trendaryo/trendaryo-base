@@ -27,6 +27,18 @@ export default {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
         },
+        // Unified Brand Color System
+        brand: {
+          tech: '#1E3A8A',
+          'tech-light': '#3B82F6',
+          'tech-dark': '#1E40AF',
+          wellness: '#10B981',
+          'wellness-light': '#34D399',
+          'wellness-dark': '#059669',
+          accent: '#F97316',
+          'accent-light': '#FB923C',
+          'accent-dark': '#EA580C',
+        },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
@@ -59,8 +71,10 @@ export default {
         },
       },
       fontFamily: {
-        sans: "var(--font-sans)",
-        serif: "var(--font-serif)",
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        serif: ['Playfair Display', 'serif'],
+        heading: ['Playfair Display', 'serif'],
+        body: ['Inter', 'system-ui', 'sans-serif'],
       },
       borderRadius: {
         lg: "var(--radius)",

@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import LazyImage from "@/components/LazyImage";
 import ProductCard from "@/components/ProductCard";
+import MagneticButton from "@/components/MagneticButton";
 import Recommendations from "@/components/Recommendations";
 
 export default function Index() {
@@ -306,29 +307,32 @@ export default function Index() {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16 animate-slide-up">
-              <Link
+              <MagneticButton
+                as="Link"
                 to="/shop?category=tech"
-                className="inline-flex items-center gap-3 px-6 md:px-8 py-3 md:py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl text-sm md:text-base"
+                className="btn-tech inline-flex items-center gap-3 text-sm md:text-base"
               >
                 <Smartphone className="w-4 h-4 md:w-5 md:h-5" />
                 Explore Technology
                 <ArrowRight className="w-4 h-4 md:w-5 md:h-5" />
-              </Link>
-              <Link
+              </MagneticButton>
+              <MagneticButton
+                as="Link"
                 to="/shop?category=wellness"
-                className="inline-flex items-center gap-3 px-6 md:px-8 py-3 md:py-4 bg-gradient-to-r from-green-600 to-teal-600 text-white font-semibold rounded-xl hover:from-green-700 hover:to-teal-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl text-sm md:text-base"
+                className="btn-wellness inline-flex items-center gap-3 text-sm md:text-base"
               >
                 <Heart className="w-4 h-4 md:w-5 md:h-5" />
                 Discover Wellness
                 <ArrowRight className="w-4 h-4 md:w-5 md:h-5" />
-              </Link>
+              </MagneticButton>
             </div>
 
             {/* Seasonal Promotions */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-16 animate-scale-in">
-              <Link 
+              <MagneticButton 
+                as="Link"
                 to="/shop?category=tech&sale=winter"
-                className="group relative bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl p-6 md:p-8 text-white overflow-hidden transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-2xl"
+                className="group relative bg-gradient-to-r from-brand-tech to-brand-tech-light rounded-2xl p-6 md:p-8 text-white overflow-hidden shadow-lg hover:shadow-2xl"
               >
                 <div className="relative z-10">
                   <div className="text-2xl md:text-3xl font-bold mb-2">Winter Tech Sale</div>
@@ -336,12 +340,13 @@ export default function Index() {
                   <div className="text-sm md:text-base opacity-90">Latest gadgets & devices</div>
                 </div>
                 <div className="absolute top-4 right-4 text-4xl md:text-6xl opacity-20">❄️</div>
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-purple-700/20 group-hover:from-blue-700/30 group-hover:to-purple-800/30 transition-all duration-300"></div>
-              </Link>
+                <div className="absolute inset-0 bg-gradient-to-r from-brand-tech-dark/20 to-brand-tech/20 group-hover:from-brand-tech-dark/30 group-hover:to-brand-tech/30 transition-all duration-300"></div>
+              </MagneticButton>
               
-              <Link 
+              <MagneticButton 
+                as="Link"
                 to="/shop?category=wellness&sale=newyear"
-                className="group relative bg-gradient-to-r from-green-500 to-teal-600 rounded-2xl p-6 md:p-8 text-white overflow-hidden transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-2xl"
+                className="group relative bg-gradient-to-r from-brand-wellness to-brand-wellness-light rounded-2xl p-6 md:p-8 text-white overflow-hidden shadow-lg hover:shadow-2xl"
               >
                 <div className="relative z-10">
                   <div className="text-2xl md:text-3xl font-bold mb-2">New Year Wellness</div>
@@ -349,8 +354,8 @@ export default function Index() {
                   <div className="text-sm md:text-base opacity-90">Start your health journey</div>
                 </div>
                 <div className="absolute top-4 right-4 text-4xl md:text-6xl opacity-20">🌟</div>
-                <div className="absolute inset-0 bg-gradient-to-r from-green-600/20 to-teal-700/20 group-hover:from-green-700/30 group-hover:to-teal-800/30 transition-all duration-300"></div>
-              </Link>
+                <div className="absolute inset-0 bg-gradient-to-r from-brand-wellness-dark/20 to-brand-wellness/20 group-hover:from-brand-wellness-dark/30 group-hover:to-brand-wellness/30 transition-all duration-300"></div>
+              </MagneticButton>
             </div>
 
             {/* Featured Product Carousel */}
@@ -601,7 +606,7 @@ export default function Index() {
           <MagneticButton
             as="Link"
             to="/shop"
-            className="inline-flex items-center gap-3 px-10 py-5 bg-white text-gray-900 font-bold rounded-xl hover:bg-gray-100 shadow-2xl text-lg"
+            className="btn-primary inline-flex items-center gap-3 text-lg"
           >
             Start Shopping
             <ArrowRight className="w-6 h-6" />
