@@ -1,6 +1,9 @@
+// Load environment variables FIRST
+import dotenv from 'dotenv';
+dotenv.config();
+
 import express from 'express';
 import cors from 'cors';
-import dotenv from 'dotenv';
 import adminRoutes from './routes/admin';
 import productRoutes from './routes/products';
 import contentRoutes from './routes/content';
@@ -9,9 +12,6 @@ import analyticsRoutes from './routes/analytics';
 import settingsRoutes from './routes/settings';
 import overviewRoutes from './routes/overview';
 import paymentRoutes from './routes/payments';
-
-// Load environment variables
-dotenv.config();
 
 export function createServer() {
   const app = express();
@@ -34,10 +34,9 @@ export function createServer() {
   return app;
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
-  const app = createServer();
-  const PORT = process.env.PORT || 3001;
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-  });
-}
+// Start server
+const app = createServer();
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});

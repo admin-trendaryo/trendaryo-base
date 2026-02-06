@@ -1,41 +1,47 @@
 import express from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+
+// Load environment variables FIRST
+dotenv.config();
 
 const router = express.Router();
 
-// Admin users - load from environment or database
-const adminUsers = [
-  {
-    id: '1',
-    email: process.env.ADMIN_EMAIL,
-    password: process.env.ADMIN_PASSWORD_HASH,
-    role: 'admin'
-  },
-  {
-    id: '2',
-    email: process.env.STAFF_EMAIL,
-    password: process.env.STAFF_PASSWORD_HASH,
-    role: 'staff'
-  }
-].filter(u => u.email && u.password);
-
-if (!process.env.JWT_SECRET) {
-  throw new Error('JWT_SECRET environment variable is required');
-}
-const JWT_SECRET = process.env.JWT_SECRET;
+const JWT_SECRET = process.env.JWT_SECRET || 'trendaryo-jwt-secret-key-change-in-production-2024';
 
 // Admin login
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
 
+    // Load admin users dynamically on each request
+    const adminUsers = [
+      {
+        id: '1',
+        email: process.env.ADMIN_EMAIL,
+        password: process.env.ADMIN_PASSWORD_HASH,
+        role: 'admin'
+      },
+      {
+        id: '2',
+        email: process.env.STAFF_EMAIL,
+        password: process.env.STAFF_PASSWORD_HASH,
+        role: 'staff'
+      }
+    ].filter(u => u.email && u.password);
+
+    console.log('Login attempt:', email);
+    console.log('Available users:', adminUsers.length);
+
     const user = adminUsers.find(u => u.email === email);
     if (!user) {
+      console.log('User not found');
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
     const isValidPassword = await bcrypt.compare(password, user.password);
+    
     if (!isValidPassword) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
@@ -55,6 +61,7 @@ router.post('/login', async (req, res) => {
       token
     });
   } catch (error) {
+    console.error('Login error:', error);
     res.status(500).json({ error: 'Login failed' });
   }
 });

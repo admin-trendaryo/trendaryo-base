@@ -95,6 +95,14 @@ export default function Footer() {
                   Press
                 </a>
               </li>
+              <li>
+                <Link
+                  to="/admin/login"
+                  className="hover:text-primary-foreground transition-colors duration-200 text-orange-300"
+                >
+                  Admin
+                </Link>
+              </li>
             </ul>
           </div>
 
