@@ -1,25 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { MagneticButton } from '../components/MagneticButton';
+import MagneticButton from '../components/MagneticButton';
 import { useAuth } from '../hooks/useAuth';
 import AdminLayout from '../components/AdminLayout';
-
-export default function OrdersManagement() {
-  // ... existing component code ...
-
-  return (
-    <AdminLayout>
-      <div className="p-6">
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl font-bold">Orders Management</h1>
-          <div className="text-sm text-gray-600">
-            Total Orders: {orders.length}
-          </div>
-        </div>
-        {/* ... rest of existing component ... */}
-      </div>
-    </AdminLayout>
-  );
-}
 
 interface Order {
   id: string;
@@ -100,93 +82,95 @@ export default function OrdersManagement() {
   };
 
   return (
-    <div className="p-6">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold">Orders Management</h1>
-        <div className="text-sm text-gray-600">
-          Total Orders: {orders.length}
-        </div>
-      </div>
-
-      <div className="bg-white rounded-lg shadow p-6 mb-6">
-        <div className="flex gap-4 mb-4">
-          <input
-            type="text"
-            placeholder="Search orders, customers..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="flex-1 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-500"
-          />
-          <select
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-500"
-          >
-            <option value="">All Status</option>
-            <option value="pending">Pending</option>
-            <option value="processing">Processing</option>
-            <option value="shipped">Shipped</option>
-            <option value="delivered">Delivered</option>
-            <option value="cancelled">Cancelled</option>
-          </select>
+    <AdminLayout>
+      <div className="p-6">
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-3xl font-bold">Orders Management</h1>
+          <div className="text-sm text-gray-600">
+            Total Orders: {orders.length}
+          </div>
         </div>
 
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead>
-              <tr className="border-b">
-                <th className="text-left py-3">Order ID</th>
-                <th className="text-left py-3">Customer</th>
-                <th className="text-left py-3">Items</th>
-                <th className="text-left py-3">Total</th>
-                <th className="text-left py-3">Status</th>
-                <th className="text-left py-3">Date</th>
-                <th className="text-left py-3">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredOrders.map(order => (
-                <tr key={order.id} className="border-b hover:bg-gray-50">
-                  <td className="py-3 font-mono text-sm">#{order.id}</td>
-                  <td className="py-3">
-                    <div>
-                      <div className="font-medium">{order.customerName}</div>
-                      <div className="text-sm text-gray-600">{order.customerEmail}</div>
-                    </div>
-                  </td>
-                  <td className="py-3">{order.items.length} items</td>
-                  <td className="py-3 font-semibold">${order.total}</td>
-                  <td className="py-3">
-                    <span className={`px-2 py-1 rounded text-sm ${getStatusColor(order.status)}`}>
-                      {order.status}
-                    </span>
-                  </td>
-                  <td className="py-3 text-sm">
-                    {new Date(order.orderDate).toLocaleDateString()}
-                  </td>
-                  <td className="py-3">
-                    <MagneticButton
-                      onClick={() => setSelectedOrder(order)}
-                      className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm"
-                    >
-                      View Details
-                    </MagneticButton>
-                  </td>
+        <div className="bg-white rounded-lg shadow p-6 mb-6">
+          <div className="flex gap-4 mb-4">
+            <input
+              type="text"
+              placeholder="Search orders, customers..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="flex-1 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-500"
+            />
+            <select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+              className="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-500"
+            >
+              <option value="">All Status</option>
+              <option value="pending">Pending</option>
+              <option value="processing">Processing</option>
+              <option value="shipped">Shipped</option>
+              <option value="delivered">Delivered</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+          </div>
+
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b">
+                  <th className="text-left py-3">Order ID</th>
+                  <th className="text-left py-3">Customer</th>
+                  <th className="text-left py-3">Items</th>
+                  <th className="text-left py-3">Total</th>
+                  <th className="text-left py-3">Status</th>
+                  <th className="text-left py-3">Date</th>
+                  <th className="text-left py-3">Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {filteredOrders.map(order => (
+                  <tr key={order.id} className="border-b hover:bg-gray-50">
+                    <td className="py-3 font-mono text-sm">#{order.id}</td>
+                    <td className="py-3">
+                      <div>
+                        <div className="font-medium">{order.customerName}</div>
+                        <div className="text-sm text-gray-600">{order.customerEmail}</div>
+                      </div>
+                    </td>
+                    <td className="py-3">{order.items.length} items</td>
+                    <td className="py-3 font-semibold">${order.total}</td>
+                    <td className="py-3">
+                      <span className={`px-2 py-1 rounded text-sm ${getStatusColor(order.status)}`}>
+                        {order.status}
+                      </span>
+                    </td>
+                    <td className="py-3 text-sm">
+                      {new Date(order.orderDate).toLocaleDateString()}
+                    </td>
+                    <td className="py-3">
+                      <MagneticButton
+                        onClick={() => setSelectedOrder(order)}
+                        className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm"
+                      >
+                        View Details
+                      </MagneticButton>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
 
-      {selectedOrder && (
-        <OrderDetailsModal
-          order={selectedOrder}
-          onClose={() => setSelectedOrder(null)}
-          onStatusUpdate={updateOrderStatus}
-        />
-      )}
-    </div>
+        {selectedOrder && (
+          <OrderDetailsModal
+            order={selectedOrder}
+            onClose={() => setSelectedOrder(null)}
+            onStatusUpdate={updateOrderStatus}
+          />
+        )}
+      </div>
+    </AdminLayout>
   );
 }
 

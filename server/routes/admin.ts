@@ -4,23 +4,26 @@ import jwt from 'jsonwebtoken';
 
 const router = express.Router();
 
-// Mock admin users - replace with database
+// Admin users - load from environment or database
 const adminUsers = [
   {
     id: '1',
-    email: 'admin@trendaryo.com',
-    password: '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+    email: process.env.ADMIN_EMAIL,
+    password: process.env.ADMIN_PASSWORD_HASH,
     role: 'admin'
   },
   {
     id: '2',
-    email: 'staff@trendaryo.com',
-    password: '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+    email: process.env.STAFF_EMAIL,
+    password: process.env.STAFF_PASSWORD_HASH,
     role: 'staff'
   }
-];
+].filter(u => u.email && u.password);
 
-const JWT_SECRET = process.env.JWT_SECRET || 'trendaryo-admin-secret-key';
+if (!process.env.JWT_SECRET) {
+  throw new Error('JWT_SECRET environment variable is required');
+}
+const JWT_SECRET = process.env.JWT_SECRET;
 
 // Admin login
 router.post('/login', async (req, res) => {

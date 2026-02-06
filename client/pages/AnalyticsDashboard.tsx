@@ -1,47 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { MagneticButton } from '../components/MagneticButton';
+import MagneticButton from '../components/MagneticButton';
 import { useAuth } from '../hooks/useAuth';
 import RealTimeWidget from '../components/RealTimeWidget';
 import AdminLayout from '../components/AdminLayout';
-
-export default function AnalyticsDashboard() {
-  // ... existing component code ...
-
-  return (
-    <AdminLayout>
-      <div className="p-6">
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl font-bold">Analytics Dashboard</h1>
-          <div className="flex gap-3">
-            <select
-              value={dateRange}
-              onChange={(e) => setDateRange(e.target.value)}
-              className="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-500"
-            >
-              <option value="7d">Last 7 days</option>
-              <option value="30d">Last 30 days</option>
-              <option value="90d">Last 90 days</option>
-              <option value="1y">Last year</option>
-            </select>
-            <MagneticButton
-              onClick={() => exportReport('csv')}
-              className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg"
-            >
-              Export CSV
-            </MagneticButton>
-            <MagneticButton
-              onClick={() => exportReport('pdf')}
-              className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg"
-            >
-              Export PDF
-            </MagneticButton>
-          </div>
-        </div>
-        {/* ... rest of existing component ... */}
-      </div>
-    </AdminLayout>
-  );
-}
 
 interface AnalyticsData {
   sales: {
@@ -114,125 +75,131 @@ export default function AnalyticsDashboard() {
   };
 
   if (loading || !analytics) {
-    return <div className="p-6">Loading analytics...</div>;
+    return (
+      <AdminLayout>
+        <div className="p-6">Loading analytics...</div>
+      </AdminLayout>
+    );
   }
 
   return (
-    <div className="p-6">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold">Analytics Dashboard</h1>
-        <div className="flex gap-3">
-          <select
-            value={dateRange}
-            onChange={(e) => setDateRange(e.target.value)}
-            className="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-500"
-          >
-            <option value="7d">Last 7 days</option>
-            <option value="30d">Last 30 days</option>
-            <option value="90d">Last 90 days</option>
-            <option value="1y">Last year</option>
-          </select>
-          <MagneticButton
-            onClick={() => exportReport('csv')}
-            className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg"
-          >
-            Export CSV
-          </MagneticButton>
-          <MagneticButton
-            onClick={() => exportReport('pdf')}
-            className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg"
-          >
-            Export PDF
-          </MagneticButton>
-        </div>
-      </div>
-
-      {/* Real-time Widget */}
-      <div className="mb-8">
-        <RealTimeWidget />
-      </div>
-
-      {/* Key Metrics */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <MetricCard
-          title="Total Revenue"
-          value={`$${analytics.sales.totalRevenue.toLocaleString()}`}
-          change={analytics.sales.revenueGrowth}
-          icon="💰"
-        />
-        <MetricCard
-          title="Total Orders"
-          value={analytics.sales.totalOrders.toString()}
-          change={12.5}
-          icon="📦"
-        />
-        <MetricCard
-          title="Conversion Rate"
-          value={`${analytics.traffic.conversionRate}%`}
-          change={-2.1}
-          icon="📈"
-        />
-        <MetricCard
-          title="Total Customers"
-          value={analytics.customers.totalCustomers.toString()}
-          change={analytics.customers.customerGrowth}
-          icon="👥"
-        />
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-        {/* Revenue Chart */}
-        <div className="bg-white p-6 rounded-lg shadow">
-          <h3 className="text-lg font-semibold mb-4">Revenue Trend</h3>
-          <RevenueChart data={analytics.sales.monthlyRevenue} />
-        </div>
-
-        {/* Traffic Chart */}
-        <div className="bg-white p-6 rounded-lg shadow">
-          <h3 className="text-lg font-semibold mb-4">Traffic Overview</h3>
-          <TrafficChart data={analytics.traffic.dailyTraffic} />
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Top Products */}
-        <div className="bg-white p-6 rounded-lg shadow">
-          <h3 className="text-lg font-semibold mb-4">Top Products</h3>
-          <div className="space-y-3">
-            {analytics.products.topProducts.map((product, index) => (
-              <div key={product.id} className="flex items-center justify-between p-3 bg-gray-50 rounded">
-                <div className="flex items-center">
-                  <span className="w-6 h-6 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">
-                    {index + 1}
-                  </span>
-                  <span className="font-medium">{product.name}</span>
-                </div>
-                <div className="text-right">
-                  <div className="font-semibold">${product.revenue}</div>
-                  <div className="text-sm text-gray-600">{product.sales} sales</div>
-                </div>
-              </div>
-            ))}
+    <AdminLayout>
+      <div className="p-6">
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-3xl font-bold">Analytics Dashboard</h1>
+          <div className="flex gap-3">
+            <select
+              value={dateRange}
+              onChange={(e) => setDateRange(e.target.value)}
+              className="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-500"
+            >
+              <option value="7d">Last 7 days</option>
+              <option value="30d">Last 30 days</option>
+              <option value="90d">Last 90 days</option>
+              <option value="1y">Last year</option>
+            </select>
+            <MagneticButton
+              onClick={() => exportReport('csv')}
+              className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg"
+            >
+              Export CSV
+            </MagneticButton>
+            <MagneticButton
+              onClick={() => exportReport('pdf')}
+              className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg"
+            >
+              Export PDF
+            </MagneticButton>
           </div>
         </div>
 
-        {/* Category Performance */}
-        <div className="bg-white p-6 rounded-lg shadow">
-          <h3 className="text-lg font-semibold mb-4">Category Performance</h3>
-          <div className="space-y-3">
-            {analytics.products.categoryPerformance.map((category) => (
-              <div key={category.category} className="flex items-center justify-between p-3 bg-gray-50 rounded">
-                <span className="font-medium">{category.category}</span>
-                <div className="text-right">
-                  <div className="font-semibold">${category.revenue}</div>
-                  <div className="text-sm text-gray-600">{category.sales} sales</div>
+        {/* Real-time Widget */}
+        <div className="mb-8">
+          <RealTimeWidget />
+        </div>
+
+        {/* Key Metrics */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <MetricCard
+            title="Total Revenue"
+            value={`$${analytics.sales.totalRevenue.toLocaleString()}`}
+            change={analytics.sales.revenueGrowth}
+            icon="💰"
+          />
+          <MetricCard
+            title="Total Orders"
+            value={analytics.sales.totalOrders.toString()}
+            change={12.5}
+            icon="📦"
+          />
+          <MetricCard
+            title="Conversion Rate"
+            value={`${analytics.traffic.conversionRate}%`}
+            change={-2.1}
+            icon="📈"
+          />
+          <MetricCard
+            title="Total Customers"
+            value={analytics.customers.totalCustomers.toString()}
+            change={analytics.customers.customerGrowth}
+            icon="👥"
+          />
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+          {/* Revenue Chart */}
+          <div className="bg-white p-6 rounded-lg shadow">
+            <h3 className="text-lg font-semibold mb-4">Revenue Trend</h3>
+            <RevenueChart data={analytics.sales.monthlyRevenue} />
+          </div>
+
+          {/* Traffic Chart */}
+          <div className="bg-white p-6 rounded-lg shadow">
+            <h3 className="text-lg font-semibold mb-4">Traffic Overview</h3>
+            <TrafficChart data={analytics.traffic.dailyTraffic} />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Top Products */}
+          <div className="bg-white p-6 rounded-lg shadow">
+            <h3 className="text-lg font-semibold mb-4">Top Products</h3>
+            <div className="space-y-3">
+              {analytics.products.topProducts.map((product, index) => (
+                <div key={product.id} className="flex items-center justify-between p-3 bg-gray-50 rounded">
+                  <div className="flex items-center">
+                    <span className="w-6 h-6 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">
+                      {index + 1}
+                    </span>
+                    <span className="font-medium">{product.name}</span>
+                  </div>
+                  <div className="text-right">
+                    <div className="font-semibold">${product.revenue}</div>
+                    <div className="text-sm text-gray-600">{product.sales} sales</div>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+          </div>
+
+          {/* Category Performance */}
+          <div className="bg-white p-6 rounded-lg shadow">
+            <h3 className="text-lg font-semibold mb-4">Category Performance</h3>
+            <div className="space-y-3">
+              {analytics.products.categoryPerformance.map((category) => (
+                <div key={category.category} className="flex items-center justify-between p-3 bg-gray-50 rounded">
+                  <span className="font-medium">{category.category}</span>
+                  <div className="text-right">
+                    <div className="font-semibold">${category.revenue}</div>
+                    <div className="text-sm text-gray-600">{category.sales} sales</div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </AdminLayout>
   );
 }
 

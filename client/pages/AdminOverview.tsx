@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MagneticButton } from '../components/MagneticButton';
+import MagneticButton from '../components/MagneticButton';
 import AdminLayout from '../components/AdminLayout';
 
 interface AdminOverview {

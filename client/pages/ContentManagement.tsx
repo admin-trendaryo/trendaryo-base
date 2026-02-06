@@ -1,29 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { MagneticButton } from '../components/MagneticButton';
+import MagneticButton from '../components/MagneticButton';
 import { useAuth } from '../hooks/useAuth';
 import AdminLayout from '../components/AdminLayout';
-
-export default function ContentManagement() {
-  // ... existing component code ...
-
-  return (
-    <AdminLayout>
-      <div className="p-6">
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl font-bold">Content Management</h1>
-          <MagneticButton
-            onClick={saveContent}
-            disabled={saving}
-            className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg disabled:opacity-50"
-          >
-            {saving ? 'Saving...' : 'Save Changes'}
-          </MagneticButton>
-        </div>
-        {/* ... rest of existing component ... */}
-      </div>
-    </AdminLayout>
-  );
-}
 
 interface ContentData {
   hero: {
@@ -102,7 +80,11 @@ export default function ContentManagement() {
     }
   };
 
-  if (!content) return <div className="p-6">Loading...</div>;
+  if (!content) return (
+    <AdminLayout>
+      <div className="p-6">Loading...</div>
+    </AdminLayout>
+  );
 
   const tabs = [
     { id: 'hero', label: 'Hero Section' },
@@ -113,56 +95,58 @@ export default function ContentManagement() {
   ];
 
   return (
-    <div className="p-6">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold">Content Management</h1>
-        <MagneticButton
-          onClick={saveContent}
-          disabled={saving}
-          className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg disabled:opacity-50"
-        >
-          {saving ? 'Saving...' : 'Save Changes'}
-        </MagneticButton>
-      </div>
-
-      <div className="bg-white rounded-lg shadow">
-        <div className="border-b">
-          <nav className="flex space-x-8 px-6">
-            {tabs.map(tab => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`py-4 px-2 border-b-2 font-medium text-sm ${
-                  activeTab === tab.id
-                    ? 'border-orange-500 text-orange-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700'
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </nav>
+    <AdminLayout>
+      <div className="p-6">
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-3xl font-bold">Content Management</h1>
+          <MagneticButton
+            onClick={saveContent}
+            disabled={saving}
+            className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg disabled:opacity-50"
+          >
+            {saving ? 'Saving...' : 'Save Changes'}
+          </MagneticButton>
         </div>
 
-        <div className="p-6">
-          {activeTab === 'hero' && (
-            <HeroSection content={content} setContent={setContent} />
-          )}
-          {activeTab === 'brand' && (
-            <BrandSection content={content} setContent={setContent} />
-          )}
-          {activeTab === 'banners' && (
-            <BannersSection content={content} setContent={setContent} />
-          )}
-          {activeTab === 'featured' && (
-            <FeaturedSection content={content} setContent={setContent} />
-          )}
-          {activeTab === 'promotions' && (
-            <PromotionsSection content={content} setContent={setContent} />
-          )}
+        <div className="bg-white rounded-lg shadow">
+          <div className="border-b">
+            <nav className="flex space-x-8 px-6">
+              {tabs.map(tab => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`py-4 px-2 border-b-2 font-medium text-sm ${
+                    activeTab === tab.id
+                      ? 'border-orange-500 text-orange-600'
+                      : 'border-transparent text-gray-500 hover:text-gray-700'
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </nav>
+          </div>
+
+          <div className="p-6">
+            {activeTab === 'hero' && (
+              <HeroSection content={content} setContent={setContent} />
+            )}
+            {activeTab === 'brand' && (
+              <BrandSection content={content} setContent={setContent} />
+            )}
+            {activeTab === 'banners' && (
+              <BannersSection content={content} setContent={setContent} />
+            )}
+            {activeTab === 'featured' && (
+              <FeaturedSection content={content} setContent={setContent} />
+            )}
+            {activeTab === 'promotions' && (
+              <PromotionsSection content={content} setContent={setContent} />
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </AdminLayout>
   );
 }
 

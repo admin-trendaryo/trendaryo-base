@@ -1,6 +1,7 @@
 import express from 'express';
 import multer from 'multer';
 import csv from 'csv-parser';
+import fs from 'fs';
 import { verifyAdminToken, requireAdmin } from './admin';
 
 const router = express.Router();
@@ -125,7 +126,7 @@ router.post('/products/bulk-upload', verifyAdminToken, upload.single('file'), (r
 
   const newProducts: any[] = [];
 
-  require('fs').createReadStream(req.file.path)
+  fs.createReadStream(req.file.path)
     .pipe(csv())
     .on('data', (row) => {
       results.processed++;
@@ -160,7 +161,7 @@ router.post('/products/bulk-upload', verifyAdminToken, upload.single('file'), (r
       products.push(...newProducts);
       
       // Clean up uploaded file
-      require('fs').unlinkSync(req.file.path);
+      fs.unlinkSync(req.file.path);
       
       res.json({
         success: results.error_count === 0,

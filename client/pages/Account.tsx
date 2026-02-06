@@ -2,7 +2,8 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { User, Package, Heart, LogOut, Edit2 } from "lucide-react";
+import PersonalizationSettings from "@/components/PersonalizationSettings";
+import { User, Package, Heart, LogOut, Edit2, Settings } from "lucide-react";
 
 export default function Account() {
   const [activeTab, setActiveTab] = useState<

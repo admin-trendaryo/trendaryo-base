@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
-import { MagneticButton } from '../components/MagneticButton';
+import MagneticButton from '../components/MagneticButton';
 
 export default function AdminLogin() {
   const [email, setEmail] = useState('');

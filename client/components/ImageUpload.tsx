@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { MagneticButton } from '../components/MagneticButton';
+import MagneticButton from '../components/MagneticButton';
 
 interface ImageUploadProps {
   onImageUploaded: (url: string) => void;

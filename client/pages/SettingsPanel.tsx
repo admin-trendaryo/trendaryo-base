@@ -1,29 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { MagneticButton } from '../components/MagneticButton';
+import MagneticButton from '../components/MagneticButton';
 import { useAuth } from '../hooks/useAuth';
 import AdminLayout from '../components/AdminLayout';
-
-export default function SettingsPanel() {
-  // ... existing component code ...
-
-  return (
-    <AdminLayout>
-      <div className="p-6">
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl font-bold">Settings</h1>
-          <MagneticButton
-            onClick={saveSettings}
-            disabled={saving}
-            className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg disabled:opacity-50"
-          >
-            {saving ? 'Saving...' : 'Save All Settings'}
-          </MagneticButton>
-        </div>
-        {/* ... rest of existing component ... */}
-      </div>
-    </AdminLayout>
-  );
-}
 
 interface Settings {
   appearance: {
@@ -117,7 +95,11 @@ export default function SettingsPanel() {
     }
   };
 
-  if (!settings) return <div className="p-6">Loading settings...</div>;
+  if (!settings) return (
+    <AdminLayout>
+      <div className="p-6">Loading settings...</div>
+    </AdminLayout>
+  );
 
   const tabs = [
     { id: 'appearance', label: 'Appearance' },
@@ -127,53 +109,55 @@ export default function SettingsPanel() {
   ];
 
   return (
-    <div className="p-6">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold">Settings</h1>
-        <MagneticButton
-          onClick={saveSettings}
-          disabled={saving}
-          className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg disabled:opacity-50"
-        >
-          {saving ? 'Saving...' : 'Save All Settings'}
-        </MagneticButton>
-      </div>
-
-      <div className="bg-white rounded-lg shadow">
-        <div className="border-b">
-          <nav className="flex space-x-8 px-6">
-            {tabs.map(tab => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`py-4 px-2 border-b-2 font-medium text-sm ${
-                  activeTab === tab.id
-                    ? 'border-orange-500 text-orange-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700'
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </nav>
+    <AdminLayout>
+      <div className="p-6">
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-3xl font-bold">Settings</h1>
+          <MagneticButton
+            onClick={saveSettings}
+            disabled={saving}
+            className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg disabled:opacity-50"
+          >
+            {saving ? 'Saving...' : 'Save All Settings'}
+          </MagneticButton>
         </div>
 
-        <div className="p-6">
-          {activeTab === 'appearance' && (
-            <AppearanceSettings settings={settings} setSettings={setSettings} />
-          )}
-          {activeTab === 'payments' && (
-            <PaymentSettings settings={settings} setSettings={setSettings} />
-          )}
-          {activeTab === 'shipping' && (
-            <ShippingSettings settings={settings} setSettings={setSettings} />
-          )}
-          {activeTab === 'seo' && (
-            <SEOSettings settings={settings} setSettings={setSettings} onGenerateSitemap={generateSitemap} />
-          )}
+        <div className="bg-white rounded-lg shadow">
+          <div className="border-b">
+            <nav className="flex space-x-8 px-6">
+              {tabs.map(tab => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`py-4 px-2 border-b-2 font-medium text-sm ${
+                    activeTab === tab.id
+                      ? 'border-orange-500 text-orange-600'
+                      : 'border-transparent text-gray-500 hover:text-gray-700'
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </nav>
+          </div>
+
+          <div className="p-6">
+            {activeTab === 'appearance' && (
+              <AppearanceSettings settings={settings} setSettings={setSettings} />
+            )}
+            {activeTab === 'payments' && (
+              <PaymentSettings settings={settings} setSettings={setSettings} />
+            )}
+            {activeTab === 'shipping' && (
+              <ShippingSettings settings={settings} setSettings={setSettings} />
+            )}
+            {activeTab === 'seo' && (
+              <SEOSettings settings={settings} setSettings={setSettings} onGenerateSitemap={generateSitemap} />
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </AdminLayout>
   );
 }
 

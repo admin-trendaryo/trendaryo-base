@@ -1,25 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { MagneticButton } from '../components/MagneticButton';
+import MagneticButton from '../components/MagneticButton';
 import { useAuth } from '../hooks/useAuth';
 import AdminLayout from '../components/AdminLayout';
-
-export default function CustomersManagement() {
-  // ... existing component code ...
-
-  return (
-    <AdminLayout>
-      <div className="p-6">
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl font-bold">Customers Management</h1>
-          <div className="text-sm text-gray-600">
-            Total Customers: {customers.length}
-          </div>
-        </div>
-        {/* ... rest of existing component ... */}
-      </div>
-    </AdminLayout>
-  );
-}
 
 interface Customer {
   id: string;
@@ -88,95 +70,97 @@ export default function CustomersManagement() {
   );
 
   return (
-    <div className="p-6">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold">Customers Management</h1>
-        <div className="text-sm text-gray-600">
-          Total Customers: {customers.length}
-        </div>
-      </div>
-
-      <div className="bg-white rounded-lg shadow p-6 mb-6">
-        <div className="flex gap-4 mb-4">
-          <input
-            type="text"
-            placeholder="Search customers..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="flex-1 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-500"
-          />
+    <AdminLayout>
+      <div className="p-6">
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-3xl font-bold">Customers Management</h1>
+          <div className="text-sm text-gray-600">
+            Total Customers: {customers.length}
+          </div>
         </div>
 
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead>
-              <tr className="border-b">
-                <th className="text-left py-3">Customer</th>
-                <th className="text-left py-3">Contact</th>
-                <th className="text-left py-3">Orders</th>
-                <th className="text-left py-3">Total Spent</th>
-                <th className="text-left py-3">Last Order</th>
-                <th className="text-left py-3">Status</th>
-                <th className="text-left py-3">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredCustomers.map(customer => (
-                <tr key={customer.id} className="border-b hover:bg-gray-50">
-                  <td className="py-3">
-                    <div>
-                      <div className="font-medium">{customer.name}</div>
-                      <div className="text-sm text-gray-600">
-                        Joined {new Date(customer.joinDate).toLocaleDateString()}
-                      </div>
-                    </div>
-                  </td>
-                  <td className="py-3">
-                    <div className="text-sm">
-                      <div>{customer.email}</div>
-                      {customer.phone && <div className="text-gray-600">{customer.phone}</div>}
-                    </div>
-                  </td>
-                  <td className="py-3 font-semibold">{customer.totalOrders}</td>
-                  <td className="py-3 font-semibold">${customer.totalSpent}</td>
-                  <td className="py-3 text-sm">
-                    {customer.lastOrderDate 
-                      ? new Date(customer.lastOrderDate).toLocaleDateString()
-                      : 'Never'
-                    }
-                  </td>
-                  <td className="py-3">
-                    <span className={`px-2 py-1 rounded text-sm ${
-                      customer.status === 'active' 
-                        ? 'bg-green-100 text-green-800' 
-                        : 'bg-gray-100 text-gray-800'
-                    }`}>
-                      {customer.status}
-                    </span>
-                  </td>
-                  <td className="py-3">
-                    <MagneticButton
-                      onClick={() => viewCustomerDetails(customer)}
-                      className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm"
-                    >
-                      View Profile
-                    </MagneticButton>
-                  </td>
+        <div className="bg-white rounded-lg shadow p-6 mb-6">
+          <div className="flex gap-4 mb-4">
+            <input
+              type="text"
+              placeholder="Search customers..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="flex-1 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-500"
+            />
+          </div>
+
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b">
+                  <th className="text-left py-3">Customer</th>
+                  <th className="text-left py-3">Contact</th>
+                  <th className="text-left py-3">Orders</th>
+                  <th className="text-left py-3">Total Spent</th>
+                  <th className="text-left py-3">Last Order</th>
+                  <th className="text-left py-3">Status</th>
+                  <th className="text-left py-3">Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {filteredCustomers.map(customer => (
+                  <tr key={customer.id} className="border-b hover:bg-gray-50">
+                    <td className="py-3">
+                      <div>
+                        <div className="font-medium">{customer.name}</div>
+                        <div className="text-sm text-gray-600">
+                          Joined {new Date(customer.joinDate).toLocaleDateString()}
+                        </div>
+                      </div>
+                    </td>
+                    <td className="py-3">
+                      <div className="text-sm">
+                        <div>{customer.email}</div>
+                        {customer.phone && <div className="text-gray-600">{customer.phone}</div>}
+                      </div>
+                    </td>
+                    <td className="py-3 font-semibold">{customer.totalOrders}</td>
+                    <td className="py-3 font-semibold">${customer.totalSpent}</td>
+                    <td className="py-3 text-sm">
+                      {customer.lastOrderDate 
+                        ? new Date(customer.lastOrderDate).toLocaleDateString()
+                        : 'Never'
+                      }
+                    </td>
+                    <td className="py-3">
+                      <span className={`px-2 py-1 rounded text-sm ${
+                        customer.status === 'active' 
+                          ? 'bg-green-100 text-green-800' 
+                          : 'bg-gray-100 text-gray-800'
+                      }`}>
+                        {customer.status}
+                      </span>
+                    </td>
+                    <td className="py-3">
+                      <MagneticButton
+                        onClick={() => viewCustomerDetails(customer)}
+                        className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm"
+                      >
+                        View Profile
+                      </MagneticButton>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
 
-      {selectedCustomer && (
-        <CustomerDetailsModal
-          customer={selectedCustomer}
-          orders={customerOrders}
-          onClose={() => setSelectedCustomer(null)}
-        />
-      )}
-    </div>
+        {selectedCustomer && (
+          <CustomerDetailsModal
+            customer={selectedCustomer}
+            orders={customerOrders}
+            onClose={() => setSelectedCustomer(null)}
+          />
+        )}
+      </div>
+    </AdminLayout>
   );
 }
 

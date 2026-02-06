@@ -56,7 +56,7 @@ const App = () => (
             {/* Global Schema.org Organization Data */}
             <SchemaData type="organization" data={{}} />
             
-            <BrowserRouter>
+            <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
               <AuthProvider>
                 <Routes>
                   <Route path="/" element={<Index />} />

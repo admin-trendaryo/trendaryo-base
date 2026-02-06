@@ -1,10 +1,64 @@
 import React, { useState, useEffect } from 'react';
-import { MagneticButton } from '../components/MagneticButton';
+import MagneticButton from '../components/MagneticButton';
 import { useAuth } from '../hooks/useAuth';
 import AdminLayout from '../components/AdminLayout';
 
+interface Product {
+  id: string;
+  name: string;
+  price: number;
+  category: string;
+  tags?: string[];
+  image: string;
+  stock: number;
+  status: 'active' | 'inactive';
+}
+
 export default function ProductManagement() {
-  // ... existing component code ...
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const fetchProducts = async () => {
+    try {
+      const response = await fetch('/api/admin/products', {
+        headers: { Authorization: `Bearer ${localStorage.getItem('admin_token')}` }
+      });
+      const data = await response.json();
+      setProducts(data.products || []);
+    } catch (error) {
+      console.error('Failed to fetch products:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    if (!confirm('Are you sure you want to delete this product?')) return;
+    
+    try {
+      await fetch(`/api/admin/products/${id}`, {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${localStorage.getItem('admin_token')}` }
+      });
+      fetchProducts();
+    } catch (error) {
+      console.error('Failed to delete product:', error);
+    }
+  };
+
+  if (loading) {
+    return (
+      <AdminLayout>
+        <div className="p-6">Loading products...</div>
+      </AdminLayout>
+    );
+  }
 
   return (
     <AdminLayout>
@@ -23,7 +77,79 @@ export default function ProductManagement() {
             </MagneticButton>
           </div>
         </div>
-        {/* ... rest of existing component ... */}
+
+        <div className="bg-white rounded-lg shadow overflow-hidden">
+          <table className="w-full">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Product</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Category</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Price</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Stock</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-200">
+              {products.map((product) => (
+                <tr key={product.id}>
+                  <td className="px-6 py-4">
+                    <div className="flex items-center">
+                      <img src={product.image} alt={product.name} className="w-10 h-10 rounded mr-3" />
+                      <span className="font-medium">{product.name}</span>
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 text-sm text-gray-600">{product.category}</td>
+                  <td className="px-6 py-4 text-sm font-medium">${product.price}</td>
+                  <td className="px-6 py-4 text-sm">{product.stock}</td>
+                  <td className="px-6 py-4">
+                    <span className={`px-2 py-1 text-xs rounded-full ${
+                      product.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
+                    }`}>
+                      {product.status}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 text-sm">
+                    <button
+                      onClick={() => setEditingProduct(product)}
+                      className="text-blue-600 hover:text-blue-800 mr-3"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => handleDelete(product.id)}
+                      className="text-red-600 hover:text-red-800"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {showAddModal && (
+          <ProductModal
+            product={null}
+            onClose={() => setShowAddModal(false)}
+            onSave={() => {
+              setShowAddModal(false);
+              fetchProducts();
+            }}
+          />
+        )}
+
+        {editingProduct && (
+          <ProductModal
+            product={editingProduct}
+            onClose={() => setEditingProduct(null)}
+            onSave={() => {
+              setEditingProduct(null);
+              fetchProducts();
+            }}
+          />
+        )}
       </div>
     </AdminLayout>
   );

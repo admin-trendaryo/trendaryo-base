@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MagneticButton } from '../components/MagneticButton';
+import MagneticButton from '../components/MagneticButton';
 
 interface BulkUploadProps {
   onClose: () => void;
