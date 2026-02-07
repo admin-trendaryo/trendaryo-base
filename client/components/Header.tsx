@@ -55,11 +55,11 @@ export default function Header() {
         "fixed top-0 left-0 right-0 z-50 bg-primary text-primary-foreground transition-all duration-300",
         isScrolled ? "shadow-lg bg-primary/95 backdrop-blur-sm" : ""
       )}>
-        <div className="container mx-auto px-4 h-20 flex items-center justify-between">
+        <div className="container mx-auto px-4 h-28 flex items-center justify-between">
           {/* Logo */}
           <Link
             to="/"
-            className="font-serif text-2xl font-bold hover:opacity-90 transition-opacity flex-shrink-0"
+            className="font-serif text-4xl font-bold hover:opacity-90 transition-opacity flex-shrink-0"
           >
             Trendaryo
           </Link>
