@@ -8,13 +8,6 @@ export default defineConfig(({ mode }) => ({
     host: "0.0.0.0",
     port: 5173,
     https: false,
-    proxy: {
-      '/api': {
-        target: 'http://localhost:3001',
-        changeOrigin: true,
-        secure: false,
-      },
-    },
     fs: {
       allow: ["./", "./client", "./shared", "./node_modules"],
       deny: [".env", ".env.*", "*.{crt,pem}", "**/.git/**"],
