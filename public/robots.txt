@@ -4,47 +4,18 @@ Allow: /
 # Block admin and private areas
 Disallow: /admin/
 Disallow: /api/
-Disallow: /login/
-Disallow: /register/
-
-# Block checkout and account pages (private user data)
-Disallow: /checkout/
-Disallow: /secure-checkout/
-Disallow: /my-account/
-Disallow: /account/
-Disallow: /order-confirmation/
-
-# Block search and filter URLs to prevent duplicate content
-Disallow: /shop?*
-Disallow: /search?*
-Disallow: /*?sort=*
-Disallow: /*?filter=*
-
-# Block cart and temporary pages
-Disallow: /shopping-cart/
-Disallow: /cart/
-Disallow: /wishlist/
 
 # Allow important pages
-Allow: /
-Allow: /shop/
+Allow: /shop
 Allow: /product/
-Allow: /technology-products/
-Allow: /wellness-products/
-Allow: /smartphones/
-Allow: /fitness-trackers/
-Allow: /about-trendaryo/
-Allow: /contact-us/
-Allow: /blog/
+Allow: /technology-products
+Allow: /wellness-products
+Allow: /smartphones
+Allow: /fitness-trackers
+Allow: /about-trendaryo
+Allow: /contact-us
 
-# Block development and testing files
-Disallow: /test/
-Disallow: /dev/
-Disallow: /*.json$
-Disallow: /*.xml$
-Disallow: /*.txt$
-
-# Allow CSS, JS, and images for proper rendering
+# Allow CSS, JS, and images
 Allow: /css/
 Allow: /js/
 Allow: /images/
@@ -54,12 +25,8 @@ Allow: /*.js$
 Allow: /*.png$
 Allow: /*.jpg$
 Allow: /*.jpeg$
-Allow: /*.gif$
 Allow: /*.webp$
 Allow: /*.svg$
 
-# Crawl delay (optional - be respectful to server)
-Crawl-delay: 1
-
-# Sitemap location
+# Sitemap
 Sitemap: https://trendaryo.com/sitemap.xml
